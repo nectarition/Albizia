@@ -10,6 +10,8 @@
     "astro": "astro"
   },
   "dependencies": {
-    "astro": "^4.0.8"
+    "astro": "^4.0.8",
+    "dayjs": "^1.11.10",
+    "sass": "^1.69.5"
   }
 }
