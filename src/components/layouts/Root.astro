@@ -1,13 +1,14 @@
 ---
 import "../../styles/style.scss";
+import config from "../../config";
 
 export interface Props {
   title?: string;
 }
 
 const pageTitle =
-  (Astro.props.title && `${Astro.props.title} - ソウゾウパレット`) ||
-  "ソウゾウパレット";
+  (Astro.props.title && `${Astro.props.title} - ${config.name}`) || config.name;
+const description = `${config.date}、${config.place}にて開催される「${config.name}」の特設サイトです。`;
 ---
 
 <html lang="ja">
@@ -17,6 +18,27 @@ const pageTitle =
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
     <meta name="generator" content="Nectarition Albizia v1.0" />
+
+    <meta name="description" content={description} />
+
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:site_name" content={config.name} />
+    <meta
+      property="og:image"
+      content="https://futabastep.net/assets/brand/icon.png"
+    />
+    <meta property="og:url" content="https://futabastep.net/" />
+    <meta property="og:description" content={description} />
+
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content={config.name} />
+    <meta name="twitter:description" content={description} />
+    <meta
+      name="twitter:image"
+      content={`${config.url}/assets/brand/icon.png`}
+      `
+    />
+
     <title>{pageTitle}</title>
   </head>
   <body>
