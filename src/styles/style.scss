@@ -18,6 +18,8 @@ html, body {
 
 body {
   font-family: 'Noto Sans JP', sans-serif;
+  background-image: url('/brand/bg.png');
+  background-size: 256px;
 }
 
 h1 { font-size: 2rem; }
@@ -50,6 +52,8 @@ table {
   border-collapse: collapse;
   width: 100%;
   text-align: left;
+  background-color: var(--brand-white-color);
+  
   tbody {
     border-top: 2px solid var(--brand-lightgray-color);
     border-bottom: 2px solid var(--brand-primary-color);
@@ -116,6 +120,13 @@ a:link, a:visited {
   &_logoContainer {
     padding: 20px;
     text-align: center;
+  }
+
+  &_logo {
+    height: 64px;
+    @media screen and (max-width: 840px) {
+      width: 100%;
+    }
   }
 
   &_title {
@@ -193,8 +204,10 @@ a:link, a:visited {
     }
 
     .eyecatch {
-      height: 128px;
+      height: 256px;
       background-color: var(--brand-primary-color);
+      background-size: cover;
+      background-position: center;
     }
     .metaWrap {
       padding: 10px;

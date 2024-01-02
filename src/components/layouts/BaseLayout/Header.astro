@@ -13,7 +13,9 @@ const menuItems = pages
 ---
 
 <nav>
-  <div class="logoContainer"><a href="/">Hello</a></div>
+  <div class="logoContainer">
+    <a href="/"><img src="/brand/logotype.svg" class="logo" /></a>
+  </div>
   <div class="menuContainer">
     <div class="menu">
       {
@@ -79,5 +81,8 @@ const menuItems = pages
         }
       }
     }
+  }
+  .logo {
+    height: 48px;
   }
 </style>
