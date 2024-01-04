@@ -45,10 +45,20 @@ const menuItems = pages
       margin-bottom: 0;
     }
   }
+
+  .logoContainer {
+    @media screen and (max-width: 840px) {
+      text-align: center;
+    }
+  }
   .menu {
     display: flex;
     gap: 10px;
     flex-wrap: wrap;
+
+    @media screen and (max-width: 840px) {
+      justify-content: center;
+    }
 
     &_item {
       padding: 5px 10px;
