@@ -25,7 +25,7 @@ const getAllMarkdownFiles = (directory) => {
 };
 
 const templateCache = {};
-const templateRegex = /> template\((\w+)\)/;
+const templateRegex = /> template\(([\w/]+)\)/;
 
 const getTemplateContent = (templateName, sourceFileName, sourceRow) => {
   const cachedTemplate = templateCache[templateName]
