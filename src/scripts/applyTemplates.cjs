@@ -33,7 +33,7 @@ const getTemplateContent = (templateName, sourceFileName, sourceRow) => {
     return cachedTemplate;
   }
 
-  const templateFilePath = path.join(__dirname, '../templates', `${templateName}.md`);
+  const templateFilePath = path.join(__dirname, '../../templates', `${templateName}.md`);
 
   let templateContent;
   try {
@@ -97,7 +97,7 @@ console.log('-----\n');
 
 templateFiles.forEach((file) => {
   const { relativeFilePath, content } = file;
-  const outputPath = path.join(__dirname, '../temp', relativeFilePath);
+  const outputPath = path.join(__dirname, '../../temp', relativeFilePath);
   const outputDirectory = path.dirname(outputPath);
 
   if (!fs.existsSync(outputDirectory)) {
@@ -110,4 +110,3 @@ templateFiles.forEach((file) => {
 });
 
 console.log('-----\nDone!');
-
