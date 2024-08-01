@@ -1,11 +1,6 @@
 const fs = require('fs');
 const path = require('path');
 
-const tempFolderPath = path.join(__dirname, '../temp');
-if (fs.existsSync(tempFolderPath)) {
-  fs.rmdirSync(tempFolderPath, { recursive: true });
-}
-
 const getAllMarkdownFiles = (directory) => {
   const files = fs.readdirSync(directory);
 
@@ -50,63 +45,72 @@ const getTemplateContent = (templateName, sourceFileName, sourceRow) => {
   return arrayedTemplate;
 }
 
-const pagesDirectory = path.join(__dirname, '../content/pages');
-const markdownFiles = getAllMarkdownFiles(pagesDirectory);
-
-const fileContents = markdownFiles.map((filePath) => {
-  const content = fs.readFileSync(filePath, 'utf8');
-  const lines = content.split('\n');
-
-  const relativeFilePath = path.relative(pagesDirectory, filePath);
-
-  console.log(`Loaded file: ${relativeFilePath}`);
-
-  return { filePath, relativeFilePath, content: lines };
-});
-
-console.log('-----\n');
-
-const templateFiles = fileContents
-  .reduce((templateFiles, file) => {
-    const { filePath, relativeFilePath, content } = file;
-
-    const matches = content.filter(l => templateRegex.test(l));
-    if (matches.length === 0) {
-      console.log(`Template application skipped: ${relativeFilePath}`);
-      return templateFiles;
-    }
-
-    const replacedContent = content
-      .map((line, i) => {
-        const templateName = line.match(templateRegex)?.[1];
-        if (!templateName) {
-          return [line];
-        }
-
-        const templateContent = getTemplateContent(templateName, relativeFilePath, i + 1);
-        return templateContent;
-      })
-      .reduce((p, c) => ([...p, ...c]), [])
-
-    console.log(`Template applied: ${relativeFilePath}`);
-
-    return [...templateFiles, { filePath, relativeFilePath, content: replacedContent }];
-  }, []);
-
-console.log('-----\n');
-
-templateFiles.forEach((file) => {
-  const { relativeFilePath, content } = file;
-  const outputPath = path.join(__dirname, '../../temp', relativeFilePath);
-  const outputDirectory = path.dirname(outputPath);
-
-  if (!fs.existsSync(outputDirectory)) {
-    fs.mkdirSync(outputDirectory, { recursive: true });
+const main = () => {
+  const tempFolderPath = path.join(__dirname, '../temp');
+  if (fs.existsSync(tempFolderPath)) {
+    fs.rmdirSync(tempFolderPath, { recursive: true });
   }
 
-  fs.writeFileSync(outputPath, `${content.join('\n').trim()}\n`);
+  const pagesDirectory = path.join(__dirname, '../content/pages');
+  const markdownFiles = getAllMarkdownFiles(pagesDirectory);
 
-  console.log(`File saved: ${relativeFilePath}`);
-});
+  const fileContents = markdownFiles.map((filePath) => {
+    const content = fs.readFileSync(filePath, 'utf8');
+    const lines = content.split('\n');
 
-console.log('-----\nDone!');
+    const relativeFilePath = path.relative(pagesDirectory, filePath);
+
+    console.log(`Loaded file: ${relativeFilePath}`);
+
+    return { filePath, relativeFilePath, content: lines };
+  });
+
+  console.log('-----\n');
+
+  const templateFiles = fileContents
+    .reduce((templateFiles, file) => {
+      const { filePath, relativeFilePath, content } = file;
+
+      const matches = content.filter(l => templateRegex.test(l));
+      if (matches.length === 0) {
+        console.log(`Template application skipped: ${relativeFilePath}`);
+        return templateFiles;
+      }
+
+      const replacedContent = content
+        .map((line, i) => {
+          const templateName = line.match(templateRegex)?.[1];
+          if (!templateName) {
+            return [line];
+          }
+
+          const templateContent = getTemplateContent(templateName, relativeFilePath, i + 1);
+          return templateContent;
+        })
+        .reduce((p, c) => ([...p, ...c]), [])
+
+      console.log(`Template applied: ${relativeFilePath}`);
+
+      return [...templateFiles, { filePath, relativeFilePath, content: replacedContent }];
+    }, []);
+
+  console.log('-----\n');
+
+  templateFiles.forEach((file) => {
+    const { relativeFilePath, content } = file;
+    const outputPath = path.join(__dirname, '../../temp', relativeFilePath);
+    const outputDirectory = path.dirname(outputPath);
+
+    if (!fs.existsSync(outputDirectory)) {
+      fs.mkdirSync(outputDirectory, { recursive: true });
+    }
+
+    fs.writeFileSync(outputPath, `${content.join('\n').trim()}\n`);
+
+    console.log(`File saved: ${relativeFilePath}`);
+  });
+
+  console.log('-----\nDone!');
+}
+
+main()
