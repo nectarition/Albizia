@@ -1,0 +1,87 @@
+---
+import { Sprite } from "astro-icon";
+
+export interface Props {
+  id?: string;
+  icon?: string;
+  label: string;
+  path?: string;
+  backgroundImage?: string;
+}
+
+const { id, icon, label, path, backgroundImage } = Astro.props;
+---
+
+<a
+  id={id}
+  class={`menuItem ${!icon && "noBorder"}`}
+  href={path}
+  {...!icon && { style: `background-image: url('${backgroundImage}')` }}
+>
+  {
+    icon && (
+      <span class="menuItem_icon">
+        <Sprite name={icon} />
+      </span>
+    )
+  }
+  <span class={`menuItem_label ${!icon && "noIcon"}`}>{label}</span>
+</a>
+
+<style lang="scss">
+  .menuItem {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    background-color: var(--brand-lightgray-color);
+    background-image: url("/assets/brand/bg-uncolored.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    color: var(--brand-primary-color);
+    border-bottom: 2px solid var(--brand-primary-color);
+    cursor: pointer;
+    text-decoration: none;
+
+    &_icon {
+      font-size: 0;
+      padding: 10px;
+      svg {
+        width: 24px;
+        height: 24px;
+      }
+    }
+
+    &_label {
+      padding: 10px;
+      padding-left: 0;
+      font-weight: bold;
+    }
+
+    position: relative;
+
+    &::after {
+      display: block;
+      content: "";
+      position: absolute;
+      width: 0%;
+      height: 100%;
+      background-color: var(--brand-primary-color);
+      transition: width 0.2s ease;
+      opacity: 20%;
+      pointer-events: none;
+    }
+
+    &:hover {
+      &::after {
+        width: 100%;
+      }
+    }
+  }
+  .noIcon {
+    padding: 10px;
+    color: var(--fg-text-color);
+  }
+  .noBorder {
+    border-bottom: none;
+  }
+</style>

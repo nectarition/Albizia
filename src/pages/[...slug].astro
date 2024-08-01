@@ -4,7 +4,10 @@ import { getCollection } from "astro:content";
 import BaseLayout from "../components/layouts/BaseLayout/BaseLayout.astro";
 
 export const getStaticPaths = async () => {
-  const pages = await getCollection("pages", (p) => p.slug !== "index");
+  const pages = await getCollection(
+    "pages",
+    (p) => p.slug !== "index" && !p.data.isMetaPage
+  );
   return pages.map((page) => ({
     params: { slug: page.slug },
     props: { page },
@@ -18,7 +21,7 @@ const { Content } = await page.render();
 <BaseLayout title={page.data.title}>
   <div class="meta">
     <div class="pageTitle">{page.data.title}</div>
-    <div class="">{dayjs(page.data.date).format("YYYY年M月D日")} 更新</div>
+    <div class="">{dayjs(page.data.date).format("YYYY年 M月 D日")} 更新</div>
   </div>
   <Content />
 </BaseLayout>
@@ -26,16 +29,14 @@ const { Content } = await page.render();
 <style lang="scss">
   .meta {
     margin-bottom: 40px;
-    padding: 20px;
-
-    text-align: center;
+    padding: 8px 0 15px;
     border-bottom: 2px solid var(--brand-primary-color);
   }
 
   .pageTitle {
-    font-size: 2.5rem;
+    font-size: 2em;
     font-weight: bold;
-    color: var(--brand-primary-color);
+    color: var(--brand-darkgray-color);
   }
   .pageSubtitle {
   }

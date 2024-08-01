@@ -1,0 +1,56 @@
+---
+import Menu from "../../parts/Menu.astro";
+---
+
+<nav class="menu">
+  <div class="brandArea">
+    <div class="logotype">
+      <img src="/assets/brand/logotype.svg" class="logotypeImage" />
+    </div>
+    <div class="about">
+      <div class="date">2025.05.04 sun.</div>
+      <div class="venue">
+        <span class="label">at</span>
+        <span class="">大田区産業プラザPiO</span>
+      </div>
+    </div>
+  </div>
+  <Menu />
+</nav>
+
+<style lang="scss">
+  .menu {
+    .brandArea {
+      padding: 40px;
+      padding-bottom: 20px;
+
+      .logotype {
+        text-align: left;
+        .logotypeImage {
+          max-width: 100%;
+          max-height: 48px;
+        }
+      }
+
+      .about {
+        font-weight: bold;
+
+        .date {
+          font-size: 1.5em;
+          color: var(--brand-primary-color);
+        }
+      }
+
+      @media screen and (max-width: 840px) {
+        padding: 20px;
+        padding-bottom: 0;
+      }
+    }
+  }
+  .label {
+    display: inline-block;
+    padding: 2px;
+    background-color: var(--brand-primary-color);
+    color: var(--fg-text-color);
+  }
+</style>
