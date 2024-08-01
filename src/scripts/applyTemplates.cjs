@@ -55,7 +55,7 @@ const markdownFiles = getAllMarkdownFiles(pagesDirectory);
 
 const fileContents = markdownFiles.map((filePath) => {
   const content = fs.readFileSync(filePath, 'utf8');
-  const lines = content.split('\n').map((line) => line.trim());
+  const lines = content.split('\n');
 
   const relativeFilePath = path.relative(pagesDirectory, filePath);
 
