@@ -1,0 +1,126 @@
+---
+import { getCollection } from "astro:content";
+import MenuItem from "./MenuItem.astro";
+import { Sprite } from "astro-icon";
+
+const pages = await getCollection("pages", (p) => p.data.showMenu);
+const orderedPages = pages
+  .filter((p) => p.slug !== "index")
+  .sort((a, b) => (a.data.menuOrder || 0) - (b.data.menuOrder || 9));
+---
+
+<Sprite.Provider>
+  <div class="menuArea">
+    <div class="menuRack">
+      <div id="menuControl">
+        <MenuItem id="openMenu" icon="mdi:menu" label="メニュー" />
+        <MenuItem id="closeMenu" icon="mdi:close" label="閉じる" />
+      </div>
+    </div>
+    <div id="menuItems">
+      <div class="menuRack">
+        <MenuItem icon="mdi:home" label="ホーム" path="/" />
+        {
+          orderedPages.map((p) => {
+            if (p.data.menuSection) {
+              return (
+                <div class="section">
+                  <div class="sectionHeader">
+                    {p.data.menuTitle ?? p.data.title}
+                  </div>
+                  {p.data.menuSection.map((s) => (
+                    <MenuItem
+                      label={s.name}
+                      path={s.path}
+                      backgroundImage={s.backgroundImage}
+                    />
+                  ))}
+                </div>
+              );
+            }
+
+            return (
+              <MenuItem
+                icon={p.data.menuIcon || "mdi:file-document"}
+                label={p.data.menuTitle ?? p.data.title}
+                path={`/${p.slug}`}
+              />
+            );
+          })
+        }
+      </div>
+    </div>
+  </div>
+</Sprite.Provider>
+
+<style lang="scss">
+  .menuArea {
+    padding: 20px;
+
+    .menuRack {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .section {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+
+      .sectionHeader {
+        font-size: 0.75em;
+        color: var(--brand-primary-color);
+      }
+    }
+  }
+</style>
+
+<style is:global>
+  .expanded {
+    display: block !important;
+  }
+
+  .hide {
+    display: none !important;
+  }
+
+  .single {
+    margin-bottom: 0;
+  }
+
+  #menuControl {
+  }
+
+  #menuItems {
+    display: none;
+    margin-top: 10px;
+  }
+
+  @media screen and (min-width: 840px) {
+    #menuItems {
+      display: block;
+      margin-top: 0;
+    }
+    #menuControl {
+      display: none;
+    }
+  }
+</style>
+
+<script is:inline lang="ts">
+  document.querySelector("#closeMenu").classList.add("hide");
+
+  document.querySelector("#openMenu").addEventListener("click", () => {
+    console.log("a");
+    document.querySelector("#openMenu").classList.add("hide");
+    document.querySelector("#closeMenu").classList.remove("hide");
+    document.querySelector("#menuItems").classList.add("expanded");
+  });
+  document.querySelector("#closeMenu").addEventListener("click", () => {
+    console.log("b");
+    document.querySelector("#openMenu").classList.remove("hide");
+    document.querySelector("#closeMenu").classList.add("hide");
+    document.querySelector("#menuItems").classList.remove("expanded");
+  });
+</script>

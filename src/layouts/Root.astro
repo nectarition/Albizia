@@ -1,6 +1,6 @@
 ---
-import "../../styles/style.scss";
-import config from "../../config";
+import "../styles/style.scss";
+import config from "../config";
 
 export interface Props {
   title?: string;
@@ -22,7 +22,7 @@ const description = `${config.date}、${config.place}にて開催される「${c
 
     <meta property="og:title" content={pageTitle} />
     <meta property="og:site_name" content={config.name} />
-    <meta property="og:image" content={`${config.url}/assets/brand/card.png`} />
+    <meta property="og:image" content={`${config.url}/card.png`} />
     <meta property="og:url" content={config.url} />
     <meta property="og:description" content={description} />
 
@@ -37,6 +37,21 @@ const description = `${config.date}、${config.place}にて開催される「${c
     <title>{pageTitle}</title>
   </head>
   <body>
-    <slot />
+    <div id="luxy">
+      <slot />
+    </div>
   </body>
 </html>
+
+<script is:inline lang="ts">
+  import luxy from "luxy.js";
+  luxy.init({
+    wrapperSpeed: 0.4,
+  });
+</script>
+
+<style>
+  #luxy {
+    height: 100%;
+  }
+</style>
