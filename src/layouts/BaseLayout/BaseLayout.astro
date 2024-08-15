@@ -11,33 +11,53 @@ const { title } = Astro.props;
 ---
 
 <Root title={title}>
-  <div class="containerWrap">
-    <Sidebar />
-    <main>
-      <div class="bodyContainer">
-        <slot />
-      </div>
-    </main>
+  <div class="wrap">
+    <div class="container">
+      <nav>
+        <Sidebar />
+      </nav>
+      <main>
+        <div class="body">
+          <slot />
+        </div>
+      </main>
+    </div>
+    <div class="footer">
+      <Footer />
+    </div>
   </div>
-  <Footer />
 </Root>
 
 <style lang="scss">
-  .containerWrap {
+  .wrap {
+    height: 100%;
+    display: grid;
+    grid-template-rows: 1fr auto;
+  }
+  .container {
     display: grid;
     grid-template-columns: 30% 1fr;
     @media screen and (max-width: 840px) {
+      grid-template-rows: auto 1fr;
       grid-template-columns: 1fr;
     }
   }
   main {
     display: grid;
-    .bodyContainer {
+    .body {
       background-color: #ffffff;
       padding: 40px;
       @media screen and (max-width: 840px) {
         padding: 20px;
       }
+    }
+  }
+  nav {
+    align-self: flex-start;
+    position: sticky;
+    top: 0px;
+    @media screen and (max-width: 840px) {
+      position: unset;
     }
   }
 </style>

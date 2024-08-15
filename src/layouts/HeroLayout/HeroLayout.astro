@@ -10,12 +10,16 @@ export interface Props {
 ---
 
 <Root title={Astro.props.title}>
-  <div>
-    <div class="containerWrap">
-      <Sidebar />
-      <Hero />
+  <div class="wrap">
+    <div class="container">
+      <nav>
+        <Sidebar />
+      </nav>
+      <div class="hero">
+        <Hero />
+      </div>
     </div>
-    <main class="bodyContainer">
+    <main class="body">
       <slot />
     </main>
     <Footer />
@@ -23,7 +27,12 @@ export interface Props {
 </Root>
 
 <style lang="scss">
-  .containerWrap {
+  .wrap {
+    height: 100%;
+    display: grid;
+    grid-template-rows: 1fr auto;
+  }
+  .container {
     display: grid;
     grid-template-columns: 30% 1fr;
     @media screen and (max-width: 840px) {
@@ -36,6 +45,14 @@ export interface Props {
     padding: 40px 10%;
     @media screen and (max-width: 840px) {
       padding: 20px;
+    }
+  }
+  nav {
+    align-self: flex-start;
+    position: sticky;
+    top: 0px;
+    @media screen and (max-width: 840px) {
+      position: unset;
     }
   }
 </style>
