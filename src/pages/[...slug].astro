@@ -6,7 +6,7 @@ import BaseLayout from "../layouts/BaseLayout/BaseLayout.astro";
 export const getStaticPaths = async () => {
   const pages = await getCollection(
     "pages",
-    (p) => p.slug !== "index" && !p.data.isMetaPage
+    (p) => p.slug !== "index" && !p.data.isMetaPage && !p.data.draft
   );
   return pages.map((page) => ({
     params: { slug: page.slug },
