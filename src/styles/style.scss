@@ -36,12 +36,19 @@ h3 {
   color: var(--brand-primary-color);
   border-left: 8px solid var(--brand-lightgray-color);
 }
-h4 { font-size: 1.4rem; }
+h4 {
+  font-size: 1.4rem;
+  color: var(--brand-primary-color);
+}
 h5 { font-size: 1.2rem; }
 h6 { font-size: 1.0rem; }
 
+p, ul, ol {
+  line-height: 2em;
+}
+
 h1, h2, h3, h4, h5, h6,
-p, table, ul {
+p, table, ul, ol {
   margin-top: 0;
   margin-bottom: 20px;
   &:last-child {
