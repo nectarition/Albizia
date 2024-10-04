@@ -2,6 +2,7 @@
 import dayjs from "dayjs";
 import { getCollection } from "astro:content";
 import BaseLayout from "../layouts/BaseLayout/BaseLayout.astro";
+import Breadcrumbs from "../components/Breadcrumbs.astro";
 
 export const getStaticPaths = async () => {
   const pages = await getCollection(
@@ -19,6 +20,7 @@ const { Content } = await page.render();
 ---
 
 <BaseLayout title={page.data.title}>
+  {page.data.breadcrumbs && <Breadcrumbs items={page.data.breadcrumbs} />}
   <div class="meta">
     <div class="pageTitle">{page.data.title}</div>
     <div class="">{dayjs(page.data.date).format("YYYY年 M月 D日")} 更新</div>

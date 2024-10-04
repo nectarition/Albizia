@@ -17,6 +17,12 @@ const pageCollection = defineCollection({
         backgroundImage: z.string()
       }))
       .optional(),
+    breadcrumbs: z
+      .array(z.object({
+        name: z.string(),
+        path: z.string()
+      }))
+      .optional()
   })
 })
 
