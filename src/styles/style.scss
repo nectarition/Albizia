@@ -63,8 +63,8 @@ table {
   background-color: var(--brand-white-color);
   
   tbody {
-    border-top: 2px solid var(--brand-lightgray-color);
-    border-bottom: 2px solid var(--brand-lightgray-color);
+    border-top: 2px solid var(--border-color);
+    border-bottom: 2px solid var(--border-color);
   }
   th, td {
     padding: 10px;
